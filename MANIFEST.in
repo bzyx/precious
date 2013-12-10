@@ -1,0 +1,12 @@
+# http://docs.python.org/distutils/sourcedist.html#manifest-template
+# http://docs.python.org/distutils/sourcedist.html#specifying-the-files-to-distribute
+
+include LICENSE
+
+# Including
+# Python source files, test/*.py will be automatically included.
+recursive-include precious *.py
+
+# Excluding
+recursive-exclude precious *.pyc
+recursive-exclude tests *.pyc
