@@ -4,6 +4,6 @@
 import rpyc
 
 c = rpyc.connect('localhost', 22222)
-print c.root.say_hello()
+print c.root.sysinfo()
 
 import pdb; pdb.set_trace()
