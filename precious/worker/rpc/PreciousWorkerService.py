@@ -1,7 +1,8 @@
-#-*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import rpyc
-
+from sarge import run, Capture
 
 class PreciousWorkerService(rpyc.Service):
 
@@ -13,13 +14,12 @@ class PreciousWorkerService(rpyc.Service):
 
     def exposed_say_hello(self):
         print "Hello!"
-        return "Hello"
+        p = run("uname -a", stdout=Capture())
+        print p.stdout.text
+        return p.stdout.text
+
 
     def exposed_say_hello_par(self, name):
         print "Hello! " + name
         return "Hello " + name
 
-if __name__ == "__main__":
-    from rpyc.utils.server import ThreadedServer
-    t = ThreadedServer(PreciousWorkerService, port=22222)
-    t.start()

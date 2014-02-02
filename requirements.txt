@@ -8,3 +8,4 @@ pam==0.1.4
 
 #Worker part
 rpyc==3.2.3
+sarge==0.1.3
