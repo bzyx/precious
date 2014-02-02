@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging
+logger = logging.getLogger("worker")
+
 import rpyc
 from sarge import run, Capture, shell_format
 from worker_utils import *
 
-import logging
-logger = logging.getLogger("worker")
+from precious.utils import get_config_path
 
 class PreciousWorkerService(rpyc.Service):
 
@@ -20,7 +22,7 @@ class PreciousWorkerService(rpyc.Service):
     def exposed_sysinfo(self):
         print "Sending sysinfo"
         return [get_ip_addr(), get_uname(), get_free_ram(),
-                get_free_space("/home/bzyx/Development/")]
+                get_free_space(get_config_path())]
 
 
     def exposed_run_command(self, command):
