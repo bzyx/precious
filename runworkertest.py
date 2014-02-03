@@ -17,4 +17,4 @@ print c.root.run_command("ls")
 print c.root.rmrf("precious")
 
 
-import pdb; pdb.set_trace()
+import pdb;pdb.set_trace()
