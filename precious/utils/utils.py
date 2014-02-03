@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import ConfigParser
 
 homepath = os.path.expanduser('~')
 dot_prercious = os.path.join(homepath, '.precious')
@@ -21,3 +22,9 @@ def get_logs_directory():
 def get_build_directory():
     # TODO: THIS IS A MOCKUP - SHOULD BE READ FROM DB OR CONFIG FILE
     return os.path.join(homepath, 'precious_build')
+
+def parse_config():
+	config = ConfigParser.ConfigParser()
+	config.readfp(open(get_config_file_path()))
+	return config
+
