@@ -40,4 +40,4 @@ from precious import views, models
 
 @login_manager.user_loader
 def load_user(userid):
-    return None
+    return models.User.query.get(userid)

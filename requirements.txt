@@ -6,6 +6,7 @@ wsgiref==0.1.2
 Flask==0.10.1
 Flask-SQLAlchemy==1.0
 Flask-Login==0.2.9
+Flask-Script==0.6.6
 velruse==1.1.1
 pam==0.1.4
 enum==0.4.4
