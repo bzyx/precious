@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-import ConfigParser
+import logging
+from ConfigParser import ConfigParser, NoSectionError
+
+logger = logging.getLogger("root")
 
 homepath = os.path.expanduser('~')
 dot_prercious = os.path.join(homepath, '.precious')
@@ -20,16 +23,28 @@ def get_logger_config_file_path():
     return os.path.join(dot_prercious, 'logging.conf')
 
 
+def parse_config():
+    config = ConfigParser()
+    config.readfp(open(get_config_file_path()))
+    return config
+
+
 def get_logs_directory():
     return os.path.join(dot_prercious, 'logs')
 
 
 def get_build_directory():
-    # TODO: THIS IS A MOCKUP - SHOULD BE READ FROM DB OR CONFIG FILE
-    return os.path.join(homepath, 'precious_build')
+    config = parse_config()
+    try:
+        return config.get('worker', 'build_directory')
+    except NoSectionError:
+        logger.warn("No section worker in config file")
+        return os.path.join(homepath, 'precious_build')
 
-
-def parse_config():
-    config = ConfigParser.ConfigParser()
-    config.readfp(open(get_config_file_path()))
-    return config
+def get_worker_port():
+    config = parse_config()
+    try:
+        return int(config.get('worker', 'port'))
+    except NoSectionError:
+        logger.warn("No section worker in config file")
+        return 22222
