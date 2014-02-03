@@ -33,7 +33,6 @@ def get_free_space(location):
 
 def run_command(cmd, input=None, async=False, **kwargs):
     timeout = kwargs.pop('timeout', None)
-    print "!!!!!!!THE TIMEOUT ", timeout
     kwargs['stdout'] = Capture(timeout=timeout)
     ts = time.time()
     p = run(cmd, input=input, async=async, **kwargs)
