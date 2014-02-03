@@ -4,9 +4,12 @@
 import time
 import json
 from urllib2 import urlopen
-from sarge import run, Capture, shell_format, default_capture_timeout
+from sarge import run, Capture, shell_format, default_capture_timeout,\
+    capture_both
+
 
 default_capture_timeout = 0.1
+
 
 def get_ip_addr():
     import socket
@@ -42,26 +45,26 @@ def get_free_space(location):
 
 def run_command(cmd, input=None, async=False, **kwargs):
     timeout = kwargs.pop('timeout', None)
-    kwargs['stdout'] = Capture(timeout=timeout)
     ts = time.time()
-    p = run(cmd, input=input, async=async, **kwargs)
+    p = capture_both(cmd, input=input, async=async, **kwargs)
     return {"command": cmd,
             "returncode": p.returncode,
-            "output": p.stdout.text.split("\n"),
-            'tstart': ts,
-            'tstop': time.time()}
+            "stdout": p.stdout.text.split("\n"),
+            "stderr": p.stderr.text.split("\n"),
+            "tstart": ts,
+            "tstop": time.time()}
 
 
 def run_command_raw_output(cmd, input=None, async=False, **kwargs):
     timeout = kwargs.pop('timeout', None)
-    kwargs['stdout'] = Capture(timeout=timeout)
     ts = time.time()
-    p = run(cmd, input=input, async=async, **kwargs)
+    p = capture_both(cmd, input=input, async=async, **kwargs)
     return {"command": cmd,
             "returncode": p.returncode,
-            "output": p.stdout.text,
-            'tstart': ts,
-            'tstop': time.time()}
+            "stdout": p.stdout.text,
+            "stderr": p.stderr.text,
+            "tstart": ts,
+            "tstop": time.time()}
 
 
 def run_command_forget_output(cmd, input=None, async=False, **kwargs):
@@ -69,5 +72,5 @@ def run_command_forget_output(cmd, input=None, async=False, **kwargs):
     p = run(cmd, input=input, async=async, **kwargs)
     return {"command": cmd,
             "returncode": p.returncode, "output": "",
-            'tstart': ts,
-            'tstop': time.time()}
+            "tstart": ts,
+            "tstop": time.time()}
