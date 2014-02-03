@@ -14,7 +14,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li {% if request.path == "/" %}class="active"{% endif %}><a href="./">Projects</a></li>
+        <li {% if request.path == "/projects" %}class="active"{% endif %}><a href="./projects">Projects</a></li>
         <li {% if request.path == "/settings" %}class="active"{% endif %}><a href="./settings">Settings</a></li>
         <li {% if request.path == "/permissions" %}class="active"{% endif %}><a href="./permissions">Permissions</a></li>
       </ul>
