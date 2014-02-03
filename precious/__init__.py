@@ -4,8 +4,6 @@ import os
 import logging
 import logging.config
 
-import pam
-
 from flask import Flask
 import flask.ext.login as flask_login
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -22,7 +20,8 @@ app = Flask(__name__)
 app.config.update(
     DEBUG=config.getboolean('webserver', 'debug'),
     SECRET_KEY=config.get('webserver', 'sekret_key'),
-    SQLALCHEMY_DATABASE_URI=config.get('database', 'uri').replace('$HOME', os.path.expanduser('~'))
+    SQLALCHEMY_DATABASE_URI=config.get(
+        'database', 'uri').replace('$HOME', os.path.expanduser('~'))
 )
 
 # Flask-SQLAlchemy
@@ -37,6 +36,7 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 from precious import views, models
+
 
 @login_manager.user_loader
 def load_user(userid):

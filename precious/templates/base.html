@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+{% if angularjs %}
+<html ng-app>
+{% else %}
 <html lang="en">
+{% endif %}
   <head>
     {% block head %}
     <meta charset="utf-8">
@@ -9,6 +13,9 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootswatch/3.0.3/cyborg/bootstrap.min.css">
+    {% if angularjs %}
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+    {% endif %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

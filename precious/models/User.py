@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from precious import db
-from enum import Enum
+from precious.utils import UserRole
 
-UserRole = Enum('Admin', 'User')
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -12,7 +11,7 @@ class User(db.Model):
     name = db.Column(db.String, index=True, unique=True)
     role = db.Column(db.SmallInteger, default=UserRole.User)
     provider = db.Column(db.String(16), index=True)
-        
+
     def __repr__(self):
         return '<User %r>' % (self.id)
 
