@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import time
+import json
+from urllib2 import urlopen
 from sarge import run, Capture, shell_format, default_capture_timeout
 
 default_capture_timeout = 0.1
-
 
 def get_ip_addr():
     import socket
@@ -16,6 +17,14 @@ def get_ip_addr():
     return socket_name
 
 
+def get_public_ip_addr():
+    return json.load(urlopen('http://wtfismyip.com/json'))['YourFuckingIPAddress']
+
+
+def get_public_hostname():
+    return json.load(urlopen('http://wtfismyip.com/json'))['YourFuckingHostname']
+
+
 def get_uname():
     p = run("uname -a", stdout=Capture())
     return ' '.join(p.stdout.text.split())
@@ -23,12 +32,12 @@ def get_uname():
 
 def get_free_ram():
     p = run("free -m", stdout=Capture())
-    return p.stdout.text.split("\n")[1]
+    return p.stdout.text.split("\n")
 
 
 def get_free_space(location):
     p = run(shell_format('du -hs {0}', location), stdout=Capture())
-    return p.stdout.text.split("\n")[0]
+    return p.stdout.text.split()[0]
 
 
 def run_command(cmd, input=None, async=False, **kwargs):
