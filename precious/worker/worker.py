@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from precious.utils import get_worker_port
 from rpc_worker_services import PreciousWorkerService
 from worker_utils import *
 
@@ -16,5 +17,5 @@ class Worker(object):
     def main(self):
         logger.info("Worker just staring.")
         from rpyc.utils.server import ThreadedServer
-        t = ThreadedServer(PreciousWorkerService, port=22222)
+        t = ThreadedServer(PreciousWorkerService, port=get_worker_port())
         t.start()
