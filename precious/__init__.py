@@ -8,7 +8,7 @@ from flask import Flask
 import flask.ext.login as flask_login
 from flask.ext.sqlalchemy import SQLAlchemy
 
-from precious.utils import get_logger_config_file_path, parse_config
+from precious.utils import get_logger_config_file_path, parse_config, get_db_uri
 
 __all__ = ['config', 'app', 'db', 'logger', 'login_manager']
 
@@ -20,8 +20,7 @@ app = Flask(__name__)
 app.config.update(
     DEBUG=config.getboolean('webserver', 'debug'),
     SECRET_KEY=config.get('webserver', 'sekret_key'),
-    SQLALCHEMY_DATABASE_URI=config.get(
-        'database', 'uri').replace('$HOME', os.path.expanduser('~'))
+    SQLALCHEMY_DATABASE_URI=get_db_uri()
 )
 
 # Flask-SQLAlchemy
