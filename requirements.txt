@@ -2,7 +2,7 @@
 argparse==1.2.1
 wsgiref==0.1.2
 APScheduler==2.1.2
-
+jsonpickle==0.6.1
 
 #Webserver part
 Flask==0.10.1
@@ -14,6 +14,5 @@ pam==0.1.4
 enum==0.4.4
 
 #Worker part
-jsonpickle==0.6.1
 rpyc==3.2.3
 sarge==0.1.3

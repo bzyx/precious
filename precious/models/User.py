@@ -3,6 +3,7 @@
 from precious import db
 from enum import Enum
 from hashlib import sha256
+from datetime import datetime
 
 UserRole = Enum('User', 'Admin')
 
@@ -15,10 +16,13 @@ class User(db.Model):
     role = db.Column(db.SmallInteger, default=UserRole.User.index)
     provider = db.Column(db.String(16), default="Local", index=True)
     password = db.Column(db.LargeBinary(32))
+    last_login = db.Column(db.DateTime)
+    registered = db.Column(db.DateTime)
 
     def __init__(self, name, provider="Local", password=None):
         self.name = name
         self.provider = provider
+        self.registered = datetime.now()
         if password:
             self.set_password(password)
 
