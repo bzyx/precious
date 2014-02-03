@@ -3,7 +3,23 @@
 {% block title %}Projects{% endblock %}
 
 {% block content %}
-  {% for p in projects %}
-    {{ p }}
-  {% endfor %}
+  <div class="panel panel-default">
+    <div class="panel-heading">Projects</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in projects %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

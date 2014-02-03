@@ -7,9 +7,11 @@ class Project(db.Model):
     __tablename__ = 'projects'
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
-    name = db.Column(db.String(80), index=True, unique=True)
-    description = db.Column(db.Text)
+    name = db.Column(db.Unicode(80), index=True, unique=True)
+    description = db.Column(db.UnicodeText)
     conf = db.Column(db.LargeBinary)
+    schedule = db.Column(db.LargeBinary)
+    history = db.relationship("Build", backref="projects")
 
     def __init__(self, name, description="", conf=None):
         self.name = name
@@ -17,4 +19,4 @@ class Project(db.Model):
         self.conf = conf
 
     def __repr__(self):
-        return '<Project %r %s>' % (self.id, self.name)
+        return '<Project id:%r name:%s>' % (self.id, self.name)

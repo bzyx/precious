@@ -11,7 +11,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, index=True)
+    name = db.Column(db.String(80), index=True)
     role = db.Column(db.SmallInteger, default=UserRole.User.index)
     provider = db.Column(db.String(16), default="Local", index=True)
     password = db.Column(db.LargeBinary(32))
@@ -23,7 +23,7 @@ class User(db.Model):
             self.set_password(password)
 
     def __repr__(self):
-        return '<User %r %s>' % (self.id, self.name)
+        return '<User id:%r name:%s>' % (self.id, self.name)
 
     def is_authenticated(self):
         return True

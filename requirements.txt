@@ -12,5 +12,6 @@ pam==0.1.4
 enum==0.4.4
 
 #Worker part
+jsonpickle==0.6.1
 rpyc==3.2.3
 sarge==0.1.3
