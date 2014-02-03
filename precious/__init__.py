@@ -33,6 +33,7 @@ logger = logging.getLogger("server")
 # Flask-Login
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = "/login"
 
 from precious import views, models
 

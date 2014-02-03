@@ -25,12 +25,13 @@ def get_user(username, provider, password=None):
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    print request.args.get("next")
     if request.method == 'POST':
         user = get_user(request.form['username'], "Local", request.form['password']) or get_user(request.form['username'], "PAM", request.form['password'])
         if user is not None:
             login_user(user)
             flash("Logged in successfully.", "success")
-            return redirect(url_for("index"))
+            return redirect(request.args.get("next") or url_for("index"))
         else:
             flash("Wrong username of password.", "danger")
     return render_template("login.html")

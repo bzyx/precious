@@ -10,13 +10,43 @@
         <tr>
           <th>#</th>
           <th>Name</th>
+          <th>Description</th>
+          <th>Last build<th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {% for p in projects %}
         <tr>
           <td>{{ p.id }}</td>
-          <td>{{ p.name }}</td>
+          <td><b>{{ p.name }}</b></td>
+          <td>{{ p.description }}</td>
+          <td>
+          {% if p.history != [] %}
+            {% if p.history[-1].success %}
+              <span class="glyphicon glyphicon-ok" style="color: green"></span> {{ p.history[-1].date }}
+            {% else %}
+              <span class="glyphicon glyphicon-remove" style="color: red"></span> {{ p.history[-1].date }}
+            {% endif %}
+          {% else %}
+            <span class="glyphicon glyphicon-off"></span>
+          {% endif %}
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs">
+              <span class="glyphicon glyphicon-play-circle"></span> Build now
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs">
+              <span class="glyphicon glyphicon-list"></span> History
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs">
+              <span class="glyphicon glyphicon-edit"></span> Settings
+            </button>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

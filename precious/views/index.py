@@ -14,4 +14,4 @@ def index():
 @app.route('/projects', methods=["GET", "POST"])
 @login_required
 def projects():
-    return render_template('projects.html', projects=Project.query.order_by('projects.name').all())
+    return render_template('projects.html', projects=Project.query.order_by('projects.id').all())
