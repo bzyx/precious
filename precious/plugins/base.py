@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from exceptions import NotImplementedError
 from enum import Enum
 
@@ -6,15 +7,18 @@ FormElements = Enum("Text", "Password", "Email", "Radio", "Checkboxes" "Textarea
 
 
 class Build_step(object):
-    def set_args(self, **args):
-        raise NotImplementedError()
-
-    def get_args(self):
-        raise NotImplementedError()
-
     @staticmethod
     def description():
         raise NotImplementedError()
+
+    def __init__(self, **kwargs):
+        self.args = kwargs
+
+    def set_args(self, **kwargs):
+        self.args = kwargs
+
+    def get_args(self):
+        return self.args
 
     def get_commands(self):
         raise NotImplementedError()
