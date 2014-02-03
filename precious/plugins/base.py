@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
+from exceptions import NotImplementedError
+from enum import Enum
+
+FormElements = Enum("Text", "Password", "Email", "Radio", "Checkboxes" "Textarea")
 
 
-"""Metaclass for BuildStep"""
-class BuildStep(object):
-    pass
+class Build_step(object):
+    def set_args(self, **args):
+        raise NotImplementedError()
+
+    def get_args(self):
+        raise NotImplementedError()
+
+    @staticmethod
+    def description():
+        raise NotImplementedError()
+
+    def get_commands(self):
+        raise NotImplementedError()
 
 
-"""Metaclass for VCS"""
-class VCS(BuildStep):
-    pass
+class Vcs(Build_step):
+    def revision_command(self):
+        raise NotImplementedError()

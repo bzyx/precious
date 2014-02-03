@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from precious import db
+import jsonpickle
 
 
 class Project(db.Model):
@@ -17,6 +18,18 @@ class Project(db.Model):
         self.name = name
         self.description = description
         self.conf = conf
+
+    def set_conf(self, conf):
+        self.conf = jsonpickle.encode(conf)
+
+    def get_conf(self):
+        jsonpickle.decode(self.conf)
+
+    def set_schedule(self, schedule):
+        self.schedule = jsonpickle.encode(schedule)
+
+    def get_schedule(self):
+        jsonpickle.decode(self.schedule)
 
     def __repr__(self):
         return '<Project id:%r name:%s>' % (self.id, self.name)
