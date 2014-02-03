@@ -32,8 +32,12 @@ class PreciousWorkerService(rpyc.Service):
             informations about the machine
         """
         logger.debug("SENDING SYSINFO")
-        return [get_ip_addr(), get_uname(), get_free_ram(),
-                get_free_space(get_config_path())]
+        return {"local_ip": get_ip_addr(),
+                "public_ip": get_public_ip_addr(),
+                "hostname": get_public_hostname(),
+                "free_ram": get_free_ram(),
+                "size_of_build_directory": get_free_space(get_config_path()),
+                }
 
     def exposed_run_command(self, command, timeout=None):
         """
@@ -103,7 +107,3 @@ class PreciousWorkerService(rpyc.Service):
         logger.debug("Removing directory {0}".format(dir_))
         return run_command_forget_output(
             shell_format('rm -rf  {0}', dir_), cwd=self.cwd)
-
-    def exposed_say_hello_par(self, name):
-        print "Hello! " + name
-        return "Hello " + name
