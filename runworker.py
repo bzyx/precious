@@ -15,6 +15,6 @@ if __name__ == "__main__":
     configure_logging_worker()
 
     logger = logging.getLogger("worker")
-    logger.info("TEST@")
+    logger.info("Worker logger configured. Can start the worker.")
     worker = Worker()
     worker.main()
