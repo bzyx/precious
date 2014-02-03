@@ -1,8 +1,9 @@
-"""Metaclass for BuildStep"""	
+# -*- coding: utf-8 -*-
+
+"""Metaclass for BuildStep"""   
 class BuildStep(object):
-	pass
+    pass
 
 """Metaclass for VCS"""
 class VCS(BuildStep):
-	pass
-	
+    pass

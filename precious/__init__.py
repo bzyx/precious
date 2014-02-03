@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import logging
 import logging.config
 
@@ -19,7 +20,7 @@ app = Flask(__name__)
 app.config.update(
     DEBUG=config.getboolean('webserver', 'debug'),
     SECRET_KEY=config.get('webserver', 'sekret_key'),
-    SQLALCHEMY_DATABASE_URI=config.get('database', 'uri')
+    SQLALCHEMY_DATABASE_URI=config.get('database', 'uri').replace('$HOME', os.path.expanduser('~'))
 )
 
 # Flask-SQLAlchemy
