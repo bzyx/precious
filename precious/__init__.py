@@ -4,6 +4,8 @@ import os
 import logging
 import logging.config
 
+import pam
+
 from flask import Flask
 import flask.ext.login as flask_login
 from flask.ext.sqlalchemy import SQLAlchemy

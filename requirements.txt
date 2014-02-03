@@ -8,6 +8,7 @@ Flask-SQLAlchemy==1.0
 Flask-Login==0.2.9
 velruse==1.1.1
 pam==0.1.4
+enum==0.4.4
 
 #Worker part
 rpyc==3.2.3
