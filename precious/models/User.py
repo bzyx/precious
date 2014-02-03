@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from precious import db
 
 class User(db.Model):

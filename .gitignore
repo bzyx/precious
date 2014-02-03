@@ -38,3 +38,4 @@ nosetests.xml
 *.sublime-workspace
 
 .precious/logs/*
+.precious/precious.db
