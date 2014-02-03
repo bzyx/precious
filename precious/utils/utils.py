@@ -33,6 +33,11 @@ def get_logs_directory():
     return os.path.join(dot_prercious, 'logs')
 
 
+def get_db_uri():
+    return parse_config().get('database',
+                              'uri').replace('$HOME', os.path.expanduser('~'))
+
+
 def get_build_directory():
     config = parse_config()
     try:
@@ -40,6 +45,7 @@ def get_build_directory():
     except NoSectionError:
         logger.warn("No section worker in config file")
         return os.path.join(homepath, 'precious_build')
+
 
 def get_worker_port():
     config = parse_config()
