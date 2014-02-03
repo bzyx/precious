@@ -35,21 +35,21 @@ class PreciousWorkerService(rpyc.Service):
         return [get_ip_addr(), get_uname(), get_free_ram(),
                 get_free_space(get_config_path())]
 
-    def exposed_run_command(self, command):
+    def exposed_run_command(self, command, timeout=None):
         """
             run a command and return the output splited by new lines
         """
         logger.debug("RUNNING: {0}".format(command))
-        return run_command(command, cwd=self.cwd)
+        return run_command(command, timeout=timeout, cwd=self.cwd, )
 
-    def exposed_run_command_raw(self, command):
+    def exposed_run_command_raw(self, command, timeout=None):
         """
             run a command and return the raw output
         """
         logger.debug("RUNNING: {0}".format(command))
-        return run_command_raw_output(command, cwd=self.cwd)
+        return run_command_raw_output(command, timeout=timeout, cwd=self.cwd)
 
-    def exposed_run_command_silient(self, command):
+    def exposed_run_command_silient(self, command, timeout=None):
         """
             rund a command and don't return the output
         """

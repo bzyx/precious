@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from sarge import run, Capture, shell_format
+import time
+from sarge import run, Capture, shell_format, default_capture_timeout
+
+default_capture_timeout = 0.1
 
 
 def get_ip_addr():
@@ -29,22 +32,33 @@ def get_free_space(location):
 
 
 def run_command(cmd, input=None, async=False, **kwargs):
-    kwargs['stdout'] = Capture()
+    timeout = kwargs.pop('timeout', None)
+    kwargs['stdout'] = Capture(timeout=timeout)
+    ts = time.time()
     p = run(cmd, input=input, async=async, **kwargs)
     return {"command": cmd,
             "returncode": p.returncode,
-            "output": p.stdout.text.split("\n")}
+            "output": p.stdout.text.split("\n"),
+            'tstart': ts,
+            'tstop': time.time()}
 
 
 def run_command_raw_output(cmd, input=None, async=False, **kwargs):
-    kwargs['stdout'] = Capture()
+    timeout = kwargs.pop('timeout', None)
+    kwargs['stdout'] = Capture(timeout=timeout)
+    ts = time.time()
     p = run(cmd, input=input, async=async, **kwargs)
     return {"command": cmd,
             "returncode": p.returncode,
-            "output": p.stdout.text}
+            "output": p.stdout.text,
+            'tstart': ts,
+            'tstop': time.time()}
 
 
 def run_command_forget_output(cmd, input=None, async=False, **kwargs):
+    ts = time.time()
     p = run(cmd, input=input, async=async, **kwargs)
     return {"command": cmd,
-            "returncode": p.returncode, "output": ""}
+            "returncode": p.returncode, "output": "",
+            'tstart': ts,
+            'tstop': time.time()}
