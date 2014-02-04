@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from base import Vcs, FormElements
+from precious.plugins import Vcs, FormElements
 
 
 class Git(Vcs):

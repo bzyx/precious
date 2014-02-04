@@ -12,7 +12,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from precious.utils import get_logger_config_file_path, parse_config, get_db_uri, get_worker_port, get_worker_host
 
 
-__all__ = ['config', 'app', 'db', 'logger', 'login_manager', 'Worker']
+__all__ = ['config', 'app', 'db', 'logger', 'login_manager', 'Worker', 'plugins']
 
 # Application config
 config = parse_config()

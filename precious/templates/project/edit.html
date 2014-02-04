@@ -41,7 +41,11 @@
         {% set outer_loop = loop %}
         <div class="row">
           <fieldset>
-            <legend>{{ b.description()[0] }}</legend>
+            <legend>{{ b.description()[0] }}
+            {% if outer_loop.index > 1 %}
+              &nbsp;<a class="btn btn-danger btn-xs" href="./project/{{ project.id }}/step_del/{{ outer_loop.index }}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+            {% endif %}
+            </legend>
             {% for key,value in b.description()[1].iteritems() %}
             <div class="form-group">
               <label class="col-lg-2 control-label">{{ value[0] }} </label>
@@ -69,18 +73,17 @@
                 <span class="glyphicon glyphicon-plus"></span> Add build step <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
+                {% for key, value in plugins.iteritems() %}
                 <li>
-                  <a href="#">a</a>
+                  <a href="./project/{{ project.id }}/step_add/{{ key }}">{{ value.description()[0] }}</a>
                 </li>
-                <li>
-                  <a href="#">b</a>
-                </li>
-                <li>
-                  <a href="#">c</a>
-                </li>
+                {% endfor %}
               </ul>
             </div>
 
+            <a class="btn btn-danger" href="./project/{{ project.id }}/delete">
+              <span class="glyphicon glyphicon-remove"></span> Delete project
+            </a>
           </div>
           <div class="col-lg-6 text-right">
             <div class="form-group">

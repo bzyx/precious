@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from base import Build_step, FormElements
+from precious.plugins import Build_step, FormElements
 
 
 class Custom_commands(Build_step):
