@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #scheduler.add_jobstore(SQLAlchemyJobStore(get_db_uri()), 'file')
 
     #scheduler.add_interval_job(check_remote_git_revision, minutes=10)
-    scheduler.add_interval_job(check_remote_git_revision, seconds=10)
+    scheduler.add_interval_job(check_remote_git_revision, seconds=45)
     scheduler.add_interval_job(check_should_buid, minutes=1)
 
     print('Press Ctrl+C to exit')

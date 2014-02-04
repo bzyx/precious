@@ -29,6 +29,7 @@ def check_remote_git_revision():
     proj = models.Project.query.all()[0]
     pm = ProjectManagment(proj)
     pm.start_project()
+    pm.build_project()
 
 
 
