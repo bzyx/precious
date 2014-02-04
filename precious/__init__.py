@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 import logging
 import logging.config
 
@@ -13,7 +12,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from precious.utils import get_logger_config_file_path, parse_config, get_db_uri, get_worker_port
 
 
-__all__ = ['config', 'app', 'db', 'logger', 'login_manager', 'worker']
+__all__ = ['config', 'app', 'db', 'logger', 'login_manager']
 
 # Application config
 config = parse_config()
@@ -38,7 +37,14 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "/login"
 
-worker = rpyc.connect('localhost', get_worker_port())
+
+#class Worker(object):
+#    _instance = None
+#    def __new__(cls, *args, **kwargs):
+#        if not cls._instance:
+#            cls._instance = rpyc.connect('localhost', get_worker_port())
+#        return cls._instance
+
 
 from precious import views, models
 
