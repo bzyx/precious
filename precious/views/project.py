@@ -83,6 +83,30 @@ def project_step_del(project_id, step_index):
     return redirect(url_for("project_edit", project_id=project.id))
 
 
+@app.route('/project/<int:project_id>/step_move_up/<int:step_index>')
+@login_required
+def project_step_move_up(project_id, step_index):
+    project = Project.query.get(project_id)
+
+    project.build_step_move_up(step_index-1)
+
+    db.session.add(project)
+    db.session.commit()
+    return redirect(url_for("project_edit", project_id=project.id))
+
+
+@app.route('/project/<int:project_id>/step_move_down/<int:step_index>')
+@login_required
+def project_step_move_down(project_id, step_index):
+    project = Project.query.get(project_id)
+
+    project.build_step_move_down(step_index-1)
+
+    db.session.add(project)
+    db.session.commit()
+    return redirect(url_for("project_edit", project_id=project.id))
+
+
 @app.route('/project/<int:project_id>/build', methods=["GET", "POST"])
 @login_required
 def project_build(project_id):
