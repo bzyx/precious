@@ -95,8 +95,6 @@ class ProjectManagment(object):
             logging.info("Checking revision project: {0}.".format(
                 self.project.name))
             git_command = self.project.build_steps[0]
-            if not isinstance(git_command, Git):
-                return False
             if len(self.project.history) == 0:
                 return True
             revison_in_db = self.project.history[-1].revision
