@@ -47,9 +47,3 @@ def settings():
             flash("Error writing file.", "danger")
 
     return render_template('settings.html', sections=sections)
-
-
-@app.route('/permissions', methods=["GET", "POST"])
-@login_required
-def permissions():
-    return render_template('base.html')
