@@ -57,8 +57,8 @@ class ProjectManagment(object):
             self.config["status"] = CLONED
         else:
             logging.info("Running pull from VCS.")
+            self.connection.root.cd("precious")
             outputs.append(self.connection.root.run_command("git pull"))
-        self.connection.root.cd("precious")
         revision = self.connection.root.run_command(
             "git rev-parse HEAD")["stdout"][0]
 
@@ -68,6 +68,7 @@ class ProjectManagment(object):
         if build_steps is None:
             build_steps = []
 
+        logging.info("Starting build.")
         build_steps.append("echo dupa")
         build_steps.append("ls")
         build_steps.append("cat requirements.txt")
