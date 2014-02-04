@@ -6,11 +6,11 @@ from precious.plugins import Build_step, FormElements
 class Make(Build_step):
     @staticmethod
     def description():
-        return ('Makefile',
-                {'configure': ('Use configure:', FormElements.Checkbox),
-                 'configure_args': ('Configure arguments:', FormElements.Text),
-                 'make_clean': ('Run make clean:', FormElements.Checkbox),
-                 'make_install': ('Run make install:', FormElements.Checkbox),
+        return (u'Makefile',
+                {'configure': (u'Use configure:', FormElements.Checkbox),
+                 'configure_args': (u'Configure arguments:', FormElements.Text),
+                 'make_clean': (u'Run make clean:', FormElements.Checkbox),
+                 'make_install': (u'Run make install:', FormElements.Checkbox),
                  })
 
     def __init__(self, **kwargs):
@@ -23,14 +23,14 @@ class Make(Build_step):
         commands = []
 
         if self.args['make_clean']:
-            commands.append('make clean')
+            commands.append(u'make clean')
 
         if self.args['configure']:
-            commands.append('./configure %s' % self.args['configure_args'])
+            commands.append(u'./configure %s' % self.args['configure_args'])
 
-        commands.append('make')
+        commands.append(u'make')
 
         if self.args['make_install']:
-            commands.append('make install')
+            commands.append(u'make install')
 
         return commands
