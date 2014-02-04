@@ -3,7 +3,7 @@
 
 import os
 import logging
-from ConfigParser import ConfigParser, NoSectionError
+from ConfigParser import ConfigParser, NoSectionError, NoOptionError
 
 logger = logging.getLogger("root")
 
@@ -51,9 +51,16 @@ def get_worker_port():
     config = parse_config()
     try:
         return int(config.get('worker', 'port'))
-    except NoSectionError:
-        logger.warn("No section worker in config file")
+    except (NoSectionError, NoOptionError):
+        logger.warn("No port worker section in config file")
+
         return 22222
 
+
 def get_worker_host():
-    return 'localhost'
+    config = parse_config()
+    try:
+        return config.get('worker', 'host')
+    except (NoSectionError, NoOptionError):
+        logger.warn("No host in worker section in config file")
+        return 'localhost'
