@@ -20,12 +20,11 @@ def projects():
 @app.route('/workers', methods=["GET", "POST"])
 @login_required
 def workers():
-    #try:
-    #info = dict(get_worker().root.sysinfo())
-    #return render_template('workers.html', info=info)
-    #except:
-    flash("Cannot connect to worker.", "danger")
-    return render_template('base.html')
+    try:
+        return render_template('workers.html', info=Worker().root.sysinfo())
+    except:
+        flash("Cannot connect to worker.", "danger")
+        return render_template('base.html')
 
 
 @app.route('/settings', methods=["GET", "POST"])
