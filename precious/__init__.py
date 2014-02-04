@@ -10,7 +10,7 @@ from flask import Flask
 import flask.ext.login as flask_login
 from flask.ext.sqlalchemy import SQLAlchemy
 
-from precious.utils import get_logger_config_file_path, parse_config, get_db_uri, get_worker_port
+from precious.utils import get_logger_config_file_path, parse_config, get_db_uri, get_worker_port, get_worker_host
 
 
 __all__ = ['config', 'app', 'db', 'logger', 'login_manager', 'worker']
@@ -38,7 +38,7 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "/login"
 
-worker = rpyc.connect('localhost', get_worker_port())
+worker = rpyc.connect(get_worker_host(), get_worker_port())
 
 from precious import views, models
 
