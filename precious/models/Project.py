@@ -10,8 +10,8 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.Unicode(80), index=True, unique=True)
     description = db.Column(db.UnicodeText)
-    _conf = db.Column("conf", db.LargeBinary)
-    _schedule = db.Column("schedule", db.LargeBinary)
+    _conf = db.Column("conf", db.Text)
+    _schedule = db.Column("schedule", db.Text)
     history = db.relationship("Build", cascade="all,delete", backref="projects")
 
     def __init__(self, name, description="", conf=[]):
