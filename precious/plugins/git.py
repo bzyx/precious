@@ -15,11 +15,12 @@ class Git(Vcs):
         if 'repo' not in kwargs.keys():
             kwargs['repo'] = u''
         if 'branch' not in kwargs.keys():
-            kwargs['branch'] = u''
+            kwargs['branch'] = u'master'
+
         super(Git, self).__init__(**kwargs)
 
     def get_commands(self):
-        return ["git clone -v --depth 1 --branch {0} {1} .".format(self.args['branch'], self.args['repo'])]
+        return [u"git clone -v --depth 1 --branch {0} {1} .".format(self.args['branch'], self.args['repo'])]
 
     def revision_command(self):
-        return "git ls-remote {1} {0}".format(self.args['branch'], self.args['repo']) + " | awk '{print $1}'"
+        return u"git ls-remote {1} {0}".format(self.args['branch'], self.args['repo']) + u" | awk '{print $1}'"

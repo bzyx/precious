@@ -41,9 +41,13 @@
           {% endif %}
           </td>
           <td class="text-right">
+            {% if p.config and "status" in p.config.keys() and p.config["status"] == 4 %}
+            <button class="btn btn-default btn-xs disabled"><span class="glyphicon glyphicon-refresh"></span> Building</button>
+            {% else %}
             <a class="btn btn-default btn-xs" href="./project/{{ p.id }}/build">
-              <span class="glyphicon glyphicon-play-circle"></span> Build now
+              <span class="glyphicon glyphicon-play"></span> Build now
             </a>
+            {% endif %}
           </td>
           <td class="text-right">
             <a class="btn btn-default btn-xs" href="./project/{{ p.id }}">

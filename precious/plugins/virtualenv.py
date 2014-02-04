@@ -6,11 +6,11 @@ from precious.plugins import Build_step, FormElements
 class Virtualenv(Build_step):
     @staticmethod
     def description():
-        return ('Python Virtual Environment',
-                {'name': ('Name:', FormElements.Text),
-                 'python': ('Python interpreter:', FormElements.Text),
-                 'clear': ('Clear out:', FormElements.Checkbox),
-                 'system-site-packages': ('System site packages:', FormElements.Checkbox),
+        return (u'Python Virtual Environment',
+                {'name': (u'Name:', FormElements.Text),
+                 'python': (u'Python interpreter:', FormElements.Text),
+                 'clear': (u'Clear out:', FormElements.Checkbox),
+                 'system-site-packages': (u'System site packages:', FormElements.Checkbox),
                  })
 
     def __init__(self, **kwargs):
@@ -21,14 +21,14 @@ class Virtualenv(Build_step):
 
     def get_commands(self):
         if not self.args['name']:
-            return ["echo \"No virtualenv name set\"", "exit 1"]
+            return [u"echo \"No virtualenv name set\"", u"exit 1"]
 
         commands = []
-        pars = " "
+        pars = u" "
         if self.args['clear']:
-            pars += "--clear "
+            pars += u"--clear "
         if self.args['system-site-packages']:
-            pars += "--system-site-packages "
-        commands.append("virtualenv -p %s~/.virtualenvs/%s" % (self.args['python'], pars, self.args['name']))
-        commands.append("source ~/.virtualenvs/%s/bin/activate" % (self.args['name']))
+            pars += u"--system-site-packages "
+        commands.append(u"virtualenv -p %s~/.virtualenvs/%s" % (self.args['python'], pars, self.args['name']))
+        commands.append(u"source ~/.virtualenvs/%s/bin/activate" % (self.args['name']))
         return commands
