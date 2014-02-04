@@ -12,9 +12,9 @@ class Git(Vcs):
                  })
 
     def __init__(self, **kwargs):
-        if not kwargs['repo']:
+        if 'repo' not in kwargs.keys():
             kwargs['repo'] = u''
-        if not kwargs['branch']:
+        if 'branch' not in kwargs.keys():
             kwargs['branch'] = u''
         super(Git, self).__init__(**kwargs)
 

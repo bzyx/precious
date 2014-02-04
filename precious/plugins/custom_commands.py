@@ -10,7 +10,7 @@ class Custom_commands(Build_step):
                 {'text': ('Commands:', FormElements.Textarea)})
 
     def __init__(self, **kwargs):
-        if not kwargs['text']:
+        if 'text' not in kwargs.keys():
             kwargs['text'] = u''
         super(Custom_commands, self).__init__(**kwargs)
 
