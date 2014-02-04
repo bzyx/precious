@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Worker information{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">Worker information</div>
+  <div class="panel-body">
+
+    <dl class="dl-horizontal">
+      {% for key in info %}
+      <dt>{{ key }}</dt>
+      {% if info[key] is string %}
+        <dd>{{ info[key] }}</dd>
+      {% else %}
+        {% for line in info[key] %}
+        <dd>{{ line }}</dd>
+        {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </dl>
+
+  </div>
+</div>
+{% endblock %}

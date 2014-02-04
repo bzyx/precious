@@ -17,6 +17,13 @@ def projects():
     return render_template('projects.html', projects=Project.query.order_by('projects.id').all())
 
 
-@app.route('/start_build/<int:project_id>/<secret_key>')
-def start_build(project_id, secret_key):
-    return abort(404)
+@app.route('/workers', methods=["GET", "POST"])
+@login_required
+def workers():
+    return render_template('workers.html', info=worker.root.sysinfo())
+
+
+@app.route('/settings', methods=["GET", "POST"])
+@login_required
+def settings():
+    return render_template('base.html')

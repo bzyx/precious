@@ -31,7 +31,8 @@ def project_history(project_id):
 @app.route('/project/<int:project_id>/edit', methods=["GET", "POST"])
 @login_required
 def project_edit(project_id):
-    project = Project.query.get(project_id)
+    #project = Project.query.get(project_id)
+    # TODO: settings here
     return "edit %r" % (project_id)
 
 
@@ -64,3 +65,9 @@ def project_delete(project_id):
                            message=project.name,
                            back=url_for("projects"),
                            type="warning")
+
+
+@app.route('/start_build/<int:project_id>/<secret_key>')
+def start_build(project_id, secret_key):
+    # TODO: build here
+    return abort(404)
