@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-lg-6">
+        Settings
+      </div>
+      <div class="col-lg-6 text-right">
+        <a class="btn btn-primary btn-xs" href="./projects"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <div class="col-lg-12">
+      <form class="form-horizontal" action="" method="post" name="settings">
+
+        {% for section in sections %}
+        <div class="row">
+          <fieldset>
+            <legend>{{ section[0] }}
+            </legend>
+            {% for key,value in section[1] %}
+            <div class="form-group">
+              <label class="col-lg-2 control-label">{{ key }} </label>
+              <div class="col-lg-10">
+                <input class="form-control" name="[{{ section[0] }}]{{ key }}" value="{{ value }}" type="text">
+              </div>
+            </div>
+            {% endfor %}
+          </fieldset>
+        </div>
+        {% endfor %}
+
+        <div class="row">
+          <div class="col-lg-12 text-right">
+            <div class="form-group">
+              <a class="btn btn-default" href="./">Cancel</a>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
