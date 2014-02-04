@@ -12,7 +12,7 @@ class Project(db.Model):
     description = db.Column(db.UnicodeText)
     conf = db.Column(db.LargeBinary)
     schedule = db.Column(db.LargeBinary)
-    history = db.relationship("Build", backref="projects")
+    history = db.relationship("Build", cascade="all,delete", backref="projects")
 
     def __init__(self, name, description="", conf=None):
         self.name = name
