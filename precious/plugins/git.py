@@ -6,7 +6,7 @@ from precious.plugins import Vcs, FormElements
 class Git(Vcs):
     @staticmethod
     def description():
-        return ('Git plugin',
+        return ('Git',
                 {'repo': ('Remote repository url', FormElements.Text),
                  'branch': ('Selected branch', FormElements.Text)
                  })
