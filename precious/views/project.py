@@ -31,9 +31,8 @@ def project_history(project_id):
 @app.route('/project/<int:project_id>/edit', methods=["GET", "POST"])
 @login_required
 def project_edit(project_id):
-    #project = Project.query.get(project_id)
-    # TODO: settings here
-    return "edit %r" % (project_id)
+    project = Project.query.get(project_id)
+    return render_template("project/edit.html", project=project)
 
 
 @app.route('/project/<int:project_id>/build', methods=["GET", "POST"])
