@@ -3,7 +3,6 @@
 import jsonpickle
 import json
 from precious import db
-from sqlalchemy.types import PickleType
 
 
 class Project(db.Model):
@@ -12,9 +11,9 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.Unicode(80), index=True, unique=True)
     description = db.Column(db.UnicodeText)
-    _conf = db.Column("conf", db.Text, default="[]")
+    _build_steps = db.Column("build_steps", db.Text, default="[]")
     _schedule = db.Column("schedule", db.Text)
-    config = db.Column(PickleType(pickler=json))
+    config = db.Column(db.PickleType(pickler=json))
     history = db.relationship(
         "Build", cascade="all,delete", backref="projects")
 
@@ -24,16 +23,16 @@ class Project(db.Model):
         self.conf = conf
 
     @property
-    def conf(self):
-        jsonpickle.decode(self._conf)
+    def build_steps(self):
+        jsonpickle.decode(self._build_steps)
 
-    @conf.setter
-    def conf(self, conf):
-        self._conf = jsonpickle.encode(conf)
+    @build_steps.setter
+    def build_steps(self, build_steps):
+        self._build_steps = jsonpickle.encode(build_steps)
 
-    @conf.deleter
-    def conf(self):
-        self._conf = jsonpickle.encode([])
+    @build_steps.deleter
+    def build_steps(self):
+        self._build_steps = jsonpickle.encode([])
 
     @property
     def schedule(self):
