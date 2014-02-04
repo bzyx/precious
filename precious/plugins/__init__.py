@@ -7,7 +7,7 @@ import inspect
 from exceptions import NotImplementedError
 from enum import Enum
 
-FormElements = Enum("Text", "Password", "Email", "Radio", "Checkboxes", "Textarea")
+FormElements = Enum("Text", "Password", "Textarea", "Checkbox")
 
 
 class Build_step(object):

@@ -5,6 +5,7 @@ from flask import render_template, request, flash, redirect, url_for
 from flask.ext.login import login_required
 from precious import *
 from precious.models import *
+from precious.plugins import FormElements
 
 
 @app.route('/project/new', methods=["GET", "POST"])
@@ -47,9 +48,13 @@ def project_edit(project_id):
 
         for i in range(len(bs)):
             args = bs[i].get_args()
-            for key in bs[i].description()[1].keys():
-                args[key] = request.form.get("step%r_%s" % (i+1, key))
+            for key, value in bs[i].description()[1].iteritems():
+                if value[1] == FormElements.Checkbox:
+                    args[key] = True if request.form.get("step%r_%s" % (i+1, key)) is not None else False
+                else:
+                    args[key] = request.form.get("step%r_%s" % (i+1, key))
             bs[i].set_args(**args)
+            print bs[i].get_args()
 
         project.build_steps = bs
         db.session.add(project)
