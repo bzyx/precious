@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from copy import deepcopy
+from datetime import datetime, timedelta
 from flask import render_template, request, flash, redirect, url_for
 from flask.ext.login import login_required
 from precious import *
 from precious.models import *
 from precious.plugins import FormElements
+from precious.sheduler import scheduler, project_buid_web
 
 
 @app.route('/project/new', methods=["GET", "POST"])
@@ -118,6 +120,9 @@ def project_build(project_id):
     project = Project.query.get(project_id)
     if request.method == 'POST':
         flash("Build of %s started." % (project.name), "info")
+        d2 = datetime.now() + timedelta(seconds=10)
+        scheduler.add_date_job(project_buid_web, d2, [project])
+        scheduler.print_jobs()
         # TODO: build here
         return redirect(url_for("projects"))
     return render_template("confirm.html",

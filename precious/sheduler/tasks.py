@@ -24,3 +24,10 @@ def check_should_buid():
         pm = ProjectManagment(project)
         pm.start_project()
         pm.build_project()
+
+
+def project_buid_web(project):
+    logger.info("Will build project from web")
+    pm = ProjectManagment(project)
+    pm.start_project()
+    pm.build_project()
