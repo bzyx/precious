@@ -45,6 +45,12 @@
             {% if outer_loop.index > 1 %}
               &nbsp;<a class="btn btn-danger btn-xs" href="./project/{{ project.id }}/step_del/{{ outer_loop.index }}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
             {% endif %}
+            {% if outer_loop.index > 2 %}
+              &nbsp;<a class="btn btn-primary btn-xs" href="./project/{{ project.id }}/step_move_up/{{ outer_loop.index }}"><span class="glyphicon glyphicon-chevron-up"></span> Move up</a>
+            {% endif %}
+            {% if not loop.last and not loop.first %}
+              &nbsp;<a class="btn btn-primary btn-xs" href="./project/{{ project.id }}/step_move_down/{{ outer_loop.index }}"><span class="glyphicon glyphicon-chevron-down"></span> Move down</a>
+            {% endif %}
             </legend>
             {% for key,value in b.description()[1].iteritems() %}
             <div class="form-group">

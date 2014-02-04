@@ -35,3 +35,13 @@ class Project(db.Model):
         bs = deepcopy(self.build_steps)
         del bs[index]
         self.build_steps = bs
+
+    def build_step_move_up(self, index):
+        bs = deepcopy(self.build_steps)
+        bs[index-1], bs[index] = bs[index], bs[index-1]
+        self.build_steps = bs
+
+    def build_step_move_down(self, index):
+        bs = deepcopy(self.build_steps)
+        bs[index+1], bs[index] = bs[index], bs[index+1]
+        self.build_steps = bs
