@@ -41,6 +41,10 @@ def get_uptime():
     p = run("uptime", stdout=Capture())
     return p.stdout.text
 
+def get_hostname():
+    p = run("hostname", stdout=Capture())
+    return p.stdout.text
+
 def get_free_space(location):
     p = run(shell_format('du -hs {0}', location), stdout=Capture())
     return p.stdout.text.split()[0]
