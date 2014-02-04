@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, flash
+from flask import request, render_template, flash
 from flask.ext.login import login_required
 from precious import *
+from precious.utils import get_config_file_path, parse_config
 from precious.models import *
 
 
@@ -30,7 +31,22 @@ def workers():
 @app.route('/settings', methods=["GET", "POST"])
 @login_required
 def settings():
-    return render_template('base.html')
+    config = parse_config()
+    sections = []
+    for section in config.sections():
+        sections.append((section, config.items(section)))
+
+    if request.method == 'POST':
+        for key, value in request.form.iteritems():
+            s = [s for s in config.sections() if key.startswith("[{}]".format(s))][0]
+            config.set(s, key.replace("[{}]".format(s), ""), value)
+        try:
+            config.write(open(get_config_file_path(), 'w'))
+            flash("Saved.", "success")
+        except:
+            flash("Error writing file.", "danger")
+
+    return render_template('settings.html', sections=sections)
 
 
 @app.route('/permissions', methods=["GET", "POST"])
