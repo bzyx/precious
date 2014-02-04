@@ -11,7 +11,7 @@ from precious import db
 from precious.utils import get_worker_host, get_worker_port
 from precious.models import Project, Build
 
-(NONE, STARTED, BUILD, REMOVED, BUILDING, ERROR) = range(6)
+(NONE, STARTED, CLONED, BUILD, REMOVED, BUILDING, ERROR) = range(7)
 
 
 class ProjectManagment(object):
@@ -42,16 +42,28 @@ class ProjectManagment(object):
                 "Project: {0} already started.".format(self.project.name))
 
     def build_project(self):
+        logging.info("Building project: {0}.".format(self.project.name))
         directory = self.project.config['directory']
-        self.connection.root.set_cwd(directory)
-        self.connection.root.run_command(
-            "git clone https://github.com/bzyx/precious.git")
+        status = self.config["status"]
+        self.connection.root.cd(directory)
+        outputs = []
+
+        timestamp_ = datetime.now()
+
+        if status >= STARTED and status < CLONED:
+            logging.info("First time build. Clonning from VCS.")
+            outputs.append(self.connection.root.run_command(
+                           "git clone https://github.com/bzyx/precious.git"))
+            self.config["status"] = CLONED
+        else:
+            logging.info("Running pull from VCS.")
+            outputs.append(self.connection.root.run_command("git pull"))
         self.connection.root.cd("precious")
         revision = self.connection.root.run_command(
             "git rev-parse HEAD")["stdout"][0]
-        build = Build(self.project, revision)
 
-        outputs = []
+        build = Build(self.project, revision)
+        build.date = timestamp_
         build_steps = self.project.build_steps
         if build_steps is None:
             build_steps = []
@@ -70,8 +82,10 @@ class ProjectManagment(object):
         build.stdout = " \n".join(combined)
         build.succes = outputs[-1]["returncode"]
 
-        self.project.history.append(build)
 
+
+        self.project.config = self.config
+        self.project.history.append(build)
         db.session.add(self.project)
         db.session.commit()
 
