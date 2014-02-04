@@ -10,8 +10,7 @@ from precious.models import *
 @login_required
 def project_new():
     if request.method == 'POST' and request.form.get("name"):
-        name = request.form["name"]
-        project = Project(name)
+        project = Project(request.form["name"], request.form["description"])
         db.session.add(project)
         db.session.commit()
         flash("Project %s deleted." % (project.name), "success")
@@ -23,7 +22,10 @@ def project_new():
 @login_required
 def project_history(project_id):
     project = Project.query.get(project_id)
-    return "history %r" % (project_id)
+    if not project.history:
+        flash("%s has no builds." % (project.name), "info")
+        return redirect(url_for("projects"))
+    return render_template("project/history.html", project=project)
 
 
 @app.route('/project/<int:project_id>/edit', methods=["GET", "POST"])
@@ -33,7 +35,7 @@ def project_edit(project_id):
     return "edit %r" % (project_id)
 
 
-@app.route('/project/<int:project_id>/build')
+@app.route('/project/<int:project_id>/build', methods=["GET", "POST"])
 @login_required
 def project_build(project_id):
     project = Project.query.get(project_id)

@@ -4,8 +4,17 @@
 
 {% block content %}
   <div class="panel panel-default">
-    <div class="panel-heading">Projects</div>
-    <table class="table table-striped table-bordered table-hover">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-lg-6">
+          Projects
+        </div>
+        <div class="col-lg-6 text-right">
+          <a class="btn btn-primary btn-xs" href="./project/new"><span class="glyphicon glyphicon-plus"></span> New</a>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>#</th>
@@ -18,7 +27,7 @@
         {% for p in projects %}
         <tr>
           <td>{{ p.id }}</td>
-          <td><b>{{ p.name }}</b></td>
+          <td><strong>{{ p.name }}</strong></td>
           <td>{{ p.description }}</td>
           <td>
           {% if p.history != [] %}
@@ -31,20 +40,20 @@
             <span class="glyphicon glyphicon-off"></span>
           {% endif %}
           </td>
-          <td>
-            <button type="button" class="btn btn-default btn-xs">
+          <td class="text-right">
+            <a class="btn btn-default btn-xs" href="./project/{{ p.id }}/build">
               <span class="glyphicon glyphicon-play-circle"></span> Build now
-            </button>
+            </a>
           </td>
-          <td>
-            <button type="button" class="btn btn-default btn-xs">
+          <td class="text-right">
+            <a class="btn btn-default btn-xs" href="./project/{{ p.id }}">
               <span class="glyphicon glyphicon-list"></span> History
-            </button>
+            </a>
           </td>
-          <td>
-            <button type="button" class="btn btn-default btn-xs">
+          <td class="text-right">
+            <a class="btn btn-default btn-xs" href="./project/{{ p.id }}/edit">
               <span class="glyphicon glyphicon-edit"></span> Settings
-            </button>
+            </a>
           </td>
         </tr>
         {% endfor %}

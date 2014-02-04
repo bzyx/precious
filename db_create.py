@@ -14,7 +14,11 @@ if __name__ == "__main__":
     p2 = Project(u"Jenkins", u"Java Suks")
     p3 = Project(u"New project", u"Just an empty project")
 
-    p1.history.append(Build(p1.id, "rev1", u"some stdout\n", True))
+    p1.history.append(Build(p1.id, "6597bfe8f42c02a4f2f6269bee71036081b7dc72", u"some stdout\n", True))
+    p1.history.append(Build(p1.id, "6597bfe8f42c02a4f2f6269bee71036081b7dc72", u"some stdout1\n", True))
+    p1.history.append(Build(p1.id, "6597bfe8f42c02a4f2f6269bee71036081b7dc72", u"some stdout2\n", False))
+    p1.history.append(Build(p1.id, "6597bfe8f42c02a4f2f6269bee71036081b7dc72", u"some stdout3\n", True))
+
     p2.history.append(Build(p2.id, "rev1", u"some stdout\n", False))
 
     db.session.add_all([p1, p2, p3])
