@@ -7,11 +7,11 @@ logger = logging.getLogger("scheduler")
 import rpyc
 
 from precious import db, models
-from precious.utils import get_worker_port
+from precious.utils import get_worker_port, get_worker_host
 from precious.worker import ProjectManagment
 
 def build_precious():
-    c = rpyc.connect('localhost', get_worker_port())
+    c = rpyc.connect(get_worker_host(), get_worker_port())
     print c.root.sysinfo()
     print c.root.run_command("ls")
     print c.root.mkdir("precious")

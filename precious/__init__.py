@@ -9,7 +9,7 @@ from flask import Flask
 import flask.ext.login as flask_login
 from flask.ext.sqlalchemy import SQLAlchemy
 
-from precious.utils import get_logger_config_file_path, parse_config, get_db_uri, get_worker_port
+from precious.utils import get_logger_config_file_path, parse_config, get_db_uri, get_worker_port, get_worker_host
 
 
 __all__ = ['config', 'app', 'db', 'logger', 'login_manager', 'Worker']
@@ -44,7 +44,7 @@ class Worker(object):
     def __new__(cls):
         if not cls._instance or not not cls._instance.root:
             try:
-                cls._instance = rpyc.connect('localhost', get_worker_port())
+                cls._instance = rpyc.connect(get_worker_host(), get_worker_port())
             except:
                 cls._instance = None
         return cls._instance
