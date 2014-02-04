@@ -54,3 +54,6 @@ def get_worker_port():
     except NoSectionError:
         logger.warn("No section worker in config file")
         return 22222
+
+def get_worker_host():
+    return 'localhost'

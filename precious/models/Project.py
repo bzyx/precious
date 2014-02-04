@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from precious import db
 import jsonpickle
+import json
+from precious import db
+from sqlalchemy.types import PickleType
 
 
 class Project(db.Model):
@@ -12,7 +14,9 @@ class Project(db.Model):
     description = db.Column(db.UnicodeText)
     _conf = db.Column("conf", db.Text)
     _schedule = db.Column("schedule", db.Text)
-    history = db.relationship("Build", cascade="all,delete", backref="projects")
+    config = db.Column(PickleType(pickler=json))
+    history = db.relationship(
+        "Build", cascade="all,delete", backref="projects")
 
     def __init__(self, name, description="", conf=[]):
         self.name = name
