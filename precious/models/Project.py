@@ -10,26 +10,38 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.Unicode(80), index=True, unique=True)
     description = db.Column(db.UnicodeText)
-    conf = db.Column(db.LargeBinary)
-    schedule = db.Column(db.LargeBinary)
+    _conf = db.Column("conf", db.LargeBinary)
+    _schedule = db.Column("schedule", db.LargeBinary)
     history = db.relationship("Build", cascade="all,delete", backref="projects")
 
-    def __init__(self, name, description="", conf=None):
+    def __init__(self, name, description="", conf=[]):
         self.name = name
         self.description = description
         self.conf = conf
 
-    def set_conf(self, conf):
-        self.conf = jsonpickle.encode(conf)
+    @property
+    def conf(self):
+        jsonpickle.decode(self._conf)
 
-    def get_conf(self):
-        jsonpickle.decode(self.conf)
+    @conf.setter
+    def conf(self, conf):
+        self._conf = jsonpickle.encode(conf)
 
-    def set_schedule(self, schedule):
-        self.schedule = jsonpickle.encode(schedule)
+    @conf.deleter
+    def conf(self):
+        self._conf = jsonpickle.encode([])
 
-    def get_schedule(self):
-        jsonpickle.decode(self.schedule)
+    @property
+    def schedule(self):
+        jsonpickle.decode(self._schedule)
+
+    @schedule.setter
+    def schedule(self, schedule):
+        self._schedule = jsonpickle.encode(schedule)
+
+    @schedule.deleter
+    def schedule(self):
+        self._schedule = jsonpickle.encode([])
 
     def __repr__(self):
         return '<Project id:%r name:%s>' % (self.id, self.name)
