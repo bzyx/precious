@@ -37,6 +37,7 @@ class PreciousWorkerService(rpyc.Service):
                 "hostname": get_public_hostname(),
                 "free_ram": get_free_ram(),
                 "size_of_build_directory": get_free_space(get_config_path()),
+                "uptime": get_uptime(),
                 }
 
     def exposed_run_command(self, command, timeout=None):

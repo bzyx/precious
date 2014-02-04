@@ -41,9 +41,8 @@ login_manager.login_view = "/login"
 #    _instance = None
 #    def __new__(cls, *args, **kwargs):
 #        if not cls._instance:
-#            cls._instance = rpyc.connect('localhost', get_worker_port())
+#            cls._instance = rpyc.connect(get_worker_host(), get_worker_port())
 #        return cls._instance
-
 
 from precious import views, models
 

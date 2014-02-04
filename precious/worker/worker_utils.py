@@ -37,6 +37,9 @@ def get_free_ram():
     p = run("free -m", stdout=Capture())
     return p.stdout.text.split("\n")
 
+def get_uptime():
+    p = run("uptime", stdout=Capture())
+    return p.stdout.text
 
 def get_free_space(location):
     p = run(shell_format('du -hs {0}', location), stdout=Capture())
