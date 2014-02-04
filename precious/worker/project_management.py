@@ -8,6 +8,7 @@ import rpyc
 from datetime import datetime
 from itertools import chain
 from precious import db
+from precious.plugins import Git
 from precious.utils import get_worker_host, get_worker_port
 from precious.models import Project, Build
 
@@ -34,8 +35,6 @@ class ProjectManagment(object):
             self.connection.root.mkdir(directory)
             self.config["directory"] = directory
             self.config["status"] = STARTED
-            self.config["repository"] = "https://github.com/bzyx/precious.git"
-            self.config["branch"] = "master"
             self.project.config = self.config
             db.session.add(self.project)
             db.session.commit()
@@ -90,6 +89,24 @@ class ProjectManagment(object):
         self.project.history.append(build)
         db.session.add(self.project)
         db.session.commit()
+        logging.info("End of buid project: {0}.".format(
+            self.project.name))
+
+    def check_revison(self):
+            logging.info("Checking revision project: {0}.".format(
+                self.project.name))
+            git_command = self.project.build_steps[0]
+            if not isinstance(git_command, Git):
+                return False
+            if len(self.project.history) == 0:
+                return True
+            revison_in_db = self.project.history[-1].revision
+            revision_in_git = self.connection.root.run_command(
+                git_command.revision_command())["stdout"][0]
+            logging.info("DB: {0} GIT: {1}".format(
+                revison_in_db, revision_in_git))
+
+            return revison_in_db != revision_in_git
 
     def remove_poject(self):
         pass
