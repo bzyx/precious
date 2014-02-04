@@ -23,7 +23,7 @@ def workers():
     try:
         return render_template('workers.html', info=Worker().root.sysinfo())
     except:
-        flash("Cannot connect to worker.", "danger")
+        flash("Cannot connect to worker.", "warning")
         return render_template('base.html')
 
 
