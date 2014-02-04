@@ -21,11 +21,13 @@ def get_ip_addr():
 
 
 def get_public_ip_addr():
-    return json.load(urlopen('http://wtfismyip.com/json'))['YourFuckingIPAddress']
+    return json.load(
+        urlopen('http://wtfismyip.com/json'))['YourFuckingIPAddress']
 
 
 def get_public_hostname():
-    return json.load(urlopen('http://wtfismyip.com/json'))['YourFuckingHostname']
+    return json.load(
+        urlopen('http://wtfismyip.com/json'))['YourFuckingHostname']
 
 
 def get_uname():
@@ -37,13 +39,16 @@ def get_free_ram():
     p = run("free -m", stdout=Capture())
     return p.stdout.text.split("\n")
 
+
 def get_uptime():
     p = run("uptime", stdout=Capture())
     return p.stdout.text
 
+
 def get_hostname():
     p = run("hostname", stdout=Capture())
     return p.stdout.text
+
 
 def get_free_space(location):
     p = run(shell_format('du -hs {0}', location), stdout=Capture())

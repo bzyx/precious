@@ -16,6 +16,14 @@ class Worker(object):
 
     def main(self):
         logger.info("Worker just staring.")
+        print "THIS IS IMPORTANT COPY THOSE TO WEB CONTROL PANEL"
+        print "PUBLIC HOSTNAME: ",get_public_hostname()
+        print "PUBLIC IP ADDR:  ",get_public_ip_addr()
+        print "IP ADDR:         ",get_ip_addr()
+        print "WILL START IN 15 SECONDS                        !"
+        import time
+        time.sleep(15)
+
         from rpyc.utils.server import ThreadedServer
         t = ThreadedServer(PreciousWorkerService, port=get_worker_port())
         t.start()

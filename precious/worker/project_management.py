@@ -78,7 +78,6 @@ class ProjectManagment(object):
         combined = list(
             chain.from_iterable([out["stdout"] for out in outputs]))
         build.stdout = " \n".join(combined)
-        #build.succes = outputs[-1]["returncode"]
 
         self.connection.root.cd("..")
         self.connection.root.rmrf(build_directory)
