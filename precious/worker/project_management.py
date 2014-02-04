@@ -50,27 +50,14 @@ class ProjectManagment(object):
         outputs = []
         timestamp_ = datetime.now()
         git_command = self.project.build_steps[0]
-        print git_command, type(git_command)
         revision = self.connection.root.run_command(
             git_command.revision_command())["stdout"][0]
-        print revision, type(revision)
         build_directory = "{0}_{1}".format(self.project_name_uniform, revision)
+
         self.connection.root.cd(directory)
         self.config["status"] = BUILD
         self.connection.root.mkdir(build_directory)
         self.connection.root.cd(build_directory)
-
-        # if status >= STARTED and status < CLONED:
-        #     logging.info("First time build. Clonning from VCS.")
-        #     outputs.append(self.connection.root.run_command(
-        #                    "git clone https://github.com/bzyx/precious.git"))
-        #     self.config["status"] = CLONED
-        # else:
-        #     logging.info("Running pull from VCS.")
-        #     self.connection.root.cd("precious")
-        #     outputs.append(self.connection.root.run_command("git pull"))
-        # revision = self.connection.root.run_command(
-        #     "git rev-parse HEAD")["stdout"][0]
 
         build = Build(self.project, revision)
         build.date = timestamp_
@@ -78,22 +65,21 @@ class ProjectManagment(object):
 
         logging.info("Starting build.")
         self.config["status"] = BUILDING
-        #build_steps.append("echo dupa")
-        # build_steps.append("ls")
-        #build_steps.append("cat requirements.txt")
+
+        build.succes = True
         for step in build_steps:
             for line in step.get_commands():
                 logging.debug("RUNNING: {0} {1} : {2}".format(
                               self.project_name_uniform, revision, line))
                 output = self.connection.root.run_command(line)
+                if output["returncode"] != 0:
+                    build.succes = False
                 outputs.append(output)
-        #" \n".join(out["stdout"]) for out in outputs
-        # print outputs[0]["stdout"]
-        #import pdb; pdb.set_trace()
+
         combined = list(
             chain.from_iterable([out["stdout"] for out in outputs]))
         build.stdout = " \n".join(combined)
-        build.succes = outputs[-1]["returncode"]
+        #build.succes = outputs[-1]["returncode"]
 
         self.connection.root.cd("..")
         self.connection.root.rmrf(build_directory)
