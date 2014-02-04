@@ -11,6 +11,13 @@ class Git(Vcs):
                  'branch': ('Selected branch', FormElements.Text)
                  })
 
+    def __init__(self, **kwargs):
+        if not kwargs['repo']:
+            kwargs['repo'] = u''
+        if not kwargs['branch']:
+            kwargs['branch'] = u''
+        super(Git, self).__init__(**kwargs)
+
     def get_commands(self):
         return ["git clone -v --depth 1 --branch {0} {1} .".format(self.args['branch'], self.args['repo'])]
 

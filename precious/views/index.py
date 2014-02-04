@@ -31,3 +31,9 @@ def workers():
 @login_required
 def settings():
     return render_template('base.html')
+
+
+@app.route('/permissions', methods=["GET", "POST"])
+@login_required
+def permissions():
+    return render_template('base.html')
