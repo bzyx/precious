@@ -60,7 +60,7 @@ def get_worker_port():
 def get_worker_host():
     config = parse_config()
     try:
-        return int(config.get('worker', 'host'))
+        return config.get('worker', 'host')
     except (NoSectionError, NoOptionError):
         logger.warn("No host in worker section in config file")
         return 'localhost'
