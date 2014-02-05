@@ -13,3 +13,4 @@ scheduler = Scheduler(standalone=True, misfire_grace_time=10, coalescing=False)
 
 scheduler.add_interval_job(check_remote_git_revision, seconds=30)
 scheduler.add_interval_job(check_should_buid, minutes=30)
+scheduler.add_interval_job(check_project_buid_web, seconds=10)

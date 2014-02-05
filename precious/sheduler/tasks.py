@@ -26,8 +26,10 @@ def check_should_buid():
         pm.build_project()
 
 
-def project_buid_web(project):
+def check_project_buid_web():
     logger.info("Will build project from web")
-    pm = ProjectManagment(project)
-    pm.start_project()
-    pm.build_project()
+    for project in models.Project.query.all():
+        pm = ProjectManagment(project)
+        pm.start_project()
+        if pm.check_project_shedudled() is True:
+            pm.build_project()

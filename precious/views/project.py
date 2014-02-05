@@ -8,7 +8,6 @@ from precious import *
 from precious.models import *
 from precious.worker import ProjectManagment
 from precious.plugins import FormElements
-from precious.sheduler import scheduler, project_buid_web
 
 
 @app.route('/project/new', methods=["GET", "POST"])
@@ -120,18 +119,17 @@ def project_step_move_down(project_id, step_index):
 def project_build(project_id):
     project = Project.query.get(project_id)
     if request.method == 'POST':
-        try:
-            pm = ProjectManagment(project)
-            pm.start_project()
-            pm.build_project()
-            #alarm_time = datetime.now() + timedelta(seconds=5)
-            #scheduler.add_date_job(project_buid_web, alarm_time)
-            #logger.info("JOBS {0}".format(scheduler.print_jobs()))
+        project.schedule = True
+        db.session.add(project)
+        db.session.commit()
+        #m = ProjectManagment(project)
+        #pm.start_project()
+        #pm.build_project()
+        #alarm_time = datetime.now() + timedelta(seconds=5)
+        #scheduler.add_date_job(project_buid_web, alarm_time)
+        #logger.info("JOBS {0}".format(scheduler.print_jobs()))
 
-            flash("Build of %s started." % (project.name), "info")
-        except Exception, e:
-            logger.exception(e)
-            flash("Cannot connect to worker.", "warning")
+        flash("Build of %s started." % (project.name), "info")
         return redirect(url_for("projects"))
     return render_template("confirm.html",
                            question="Build project?",

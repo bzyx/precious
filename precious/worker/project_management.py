@@ -105,6 +105,14 @@ class ProjectManagment(object):
 
             return revison_in_db != revision_in_git
 
+    def check_project_shedudled(self):
+        if self.project.schedule:
+            self.project.schedule = None
+            db.session.add(self.project)
+            db.session.commit()
+            return True
+        return False
+
     def remove_poject(self):
         pass
 
