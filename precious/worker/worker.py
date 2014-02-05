@@ -20,9 +20,9 @@ class Worker(object):
         print "PUBLIC HOSTNAME: ",get_public_hostname()
         print "PUBLIC IP ADDR:  ",get_public_ip_addr()
         print "IP ADDR:         ",get_ip_addr()
-        print "WILL START IN 15 SECONDS                        !"
+        print "WILL START IN 2 SECONDS                        !"
         import time
-        time.sleep(15)
+        time.sleep(2)
 
         from rpyc.utils.server import ThreadedServer
         t = ThreadedServer(PreciousWorkerService, port=get_worker_port())

@@ -120,17 +120,17 @@ def project_step_move_down(project_id, step_index):
 def project_build(project_id):
     project = Project.query.get(project_id)
     if request.method == 'POST':
-
-        #flash("Build of %s started." % (project.name), "info")
-        #d2 = datetime.now() + timedelta(seconds=10)
-        #scheduler.add_date_job(project_buid_web, d2, [project])
-        #scheduler.print_jobs()
         try:
             pm = ProjectManagment(project)
             pm.start_project()
             pm.build_project()
+            #alarm_time = datetime.now() + timedelta(seconds=5)
+            #scheduler.add_date_job(project_buid_web, alarm_time)
+            #logger.info("JOBS {0}".format(scheduler.print_jobs()))
+
             flash("Build of %s started." % (project.name), "info")
-        except:
+        except Exception, e:
+            logger.exception(e)
             flash("Cannot connect to worker.", "warning")
         return redirect(url_for("projects"))
     return render_template("confirm.html",

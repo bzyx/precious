@@ -95,19 +95,15 @@ class ProjectManagment(object):
             logging.info("Checking revision project: {0}.".format(
                 self.project.name))
             git_command = self.project.build_steps[0]
-            if isinstance(git_command, Git):
-                if len(self.project.history) == 0:
-                    return True
-                revison_in_db = self.project.history[-1].revision
-                revision_in_git = self.connection.root.run_command(
-                    git_command.revision_command())["stdout"][0]
-                logging.info("DB: {0} GIT: {1}".format(
-                    revison_in_db, revision_in_git))
+            if len(self.project.history) == 0:
+                return True
+            revison_in_db = self.project.history[-1].revision
+            revision_in_git = self.connection.root.run_command(
+                git_command.revision_command())["stdout"][0]
+            logging.info("DB: {0} GIT: {1}".format(
+                revison_in_db, revision_in_git))
 
-                return revison_in_db != revision_in_git
-            else:
-                logger.error("command was not git!")
-                return False
+            return revison_in_db != revision_in_git
 
     def remove_poject(self):
         pass
